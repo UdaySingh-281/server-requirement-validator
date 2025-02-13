@@ -1,0 +1,50 @@
+---
+- name: Validate Environment Configuration
+  hosts: all
+  gather_facts: yes
+  vars_files:
+    vars.yml
+  tasks:
+    - name: Define minimum requirements for each group
+      set_fact:
+        min_memory_requirement: "{{ (web_servers_minimum.memory_mb if 'web_servers' in group_names else
+                                    app_servers_minimum.memory_mb if 'app_servers' in group_names else
+                                    db_servers_minimum.memory_mb) | int }}"
+        min_cpu_requirement: "{{ (web_servers_minimum.cpu_cores if 'web_servers' in group_names else
+                                 app_servers_minimum.cpu_cores if 'app_servers' in group_names else
+                                 db_servers_minimum.cpu_cores) | int }}"
+
+    # - name: Convert minimum requirements to integers
+    #   set_fact:
+    #     min_memory_requirement: "{{ min_memory_requirement | int }}"
+    #     min_cpu_requirement: "{{ min_cpu_requirement | int }}"
+
+    - name: Validate server requirements
+      block:
+        - name: Verify Memory Requirements
+          assert:
+            that:
+              - ansible_memtotal_mb | int >= min_memory_requirement | int
+            fail_msg: "Insufficient memory! Required: {{ min_memory_requirement }} MB, Found: {{ ansible_memtotal_mb }} MB"
+
+        - name: Verify CPU Requirements
+          assert:
+            that:
+              - ansible_processor_cores | int >= min_cpu_requirement | int
+            fail_msg: "Insufficient CPU cores! Required: {{ min_cpu_requirement }}, Found: {{ ansible_processor_cores }}"
+
+      rescue:
+        - name: Record validation failure
+          set_stats:
+            data:
+              validation_failed: "{{ inventory_hostname }}"
+
+        - name: Send notification
+          debug:
+            msg: "Configuration validation failed for {{ inventory_hostname }}!"
+
+      always:
+        - name: Record validation status
+          set_stats:
+            data:
+              validation_completed: "{{ inventory_hostname }}"

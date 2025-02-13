@@ -1,0 +1,11 @@
+web_servers_minimum:
+  cpu_cores: 2
+  memory_mb: 872
+
+db_servers_minimum:
+  cpu_cores: 4
+  memory_mb: 8192
+
+app_servers_minimum:
+  cpu_cores: 4
+  memory_mb: 4096
