@@ -12,8 +12,8 @@ This Ansible playbook ensures that all servers in your infrastructure meet the r
 
 ansible-env-validator/ 
 * │── 📄 playbook.yml # Main Ansible playbook
-* │── 📄 vars.yml # Defines system requirements for each server group │
-* ── 📄 inventory.ini
+* │── 📄 vars.yml # Defines system requirements for each server group
+* │── 📄 inventory.ini
 
 
 ## Prerequisites
