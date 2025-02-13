@@ -10,14 +10,14 @@ This Ansible playbook ensures that all servers in your infrastructure meet the r
 
 ## Repository Structure
 
-ansible-env-validator/ 
+server-requirement-validator/ 
 * │── 📄 playbook.yml # Main Ansible playbook
 * │── 📄 vars.yml # Defines system requirements for each server group
 * │── 📄 inventory.ini
 
 
 ## Prerequisites
-- Ansible installed on the control node (`pip install ansible`).
+- Ansible installed on the control node (`sudo apt install ansible -y`).
 - SSH access to all target hosts.
 - Properly configured Ansible inventory file.
 
