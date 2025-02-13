@@ -23,7 +23,7 @@ server-requirement-validator/
 
 ## Setup & Usage
 1. **Clone the repository**  
-   * git clone https://github.com/your-username/ansible-env-validator.git
+   * git clone https://github.com/UdaySingh-281/server-requirement-validator.git
    * cd ansible-env-validator
 
 ## Run the playbook
