@@ -14,11 +14,6 @@
                                  app_servers_minimum.cpu_cores if 'app_servers' in group_names else
                                  db_servers_minimum.cpu_cores) | int }}"
 
-    # - name: Convert minimum requirements to integers
-    #   set_fact:
-    #     min_memory_requirement: "{{ min_memory_requirement | int }}"
-    #     min_cpu_requirement: "{{ min_cpu_requirement | int }}"
-
     - name: Validate server requirements
       block:
         - name: Verify Memory Requirements
